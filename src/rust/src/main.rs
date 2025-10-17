@@ -20,7 +20,7 @@ enum Commands {
 
     /// Install development tools
     Install {
-        /// Specific tool to install (all, c, rust, cepton)
+        /// Specific tool to install (all, c, rust, cepton, ufb)
         #[arg(default_value = "all")]
         tool: String,
     },
@@ -31,6 +31,9 @@ enum Commands {
         #[arg(short, long)]
         path: Option<String>,
     },
+
+    /// Setup Cepton Unified Firmware (UFB) development environment
+    Ufb,
 
     /// Initialize configuration file
     Init,
@@ -46,6 +49,7 @@ fn main() {
         Commands::Check => check_environment(),
         Commands::Install { tool } => install_tools(&tool),
         Commands::Cepton { path } => configure_cepton(path),
+        Commands::Ufb => setup_ufb(),
         Commands::Init => init_config(),
         Commands::Version => show_version(),
     }
@@ -112,11 +116,17 @@ fn install_tools(tool: &str) {
         "c" => installer::install_c_toolchain(),
         "rust" => installer::install_rust_toolchain(),
         "cepton" => installer::install_cepton_sdk(None),
+        "ufb" => installer::install_ufb_dependencies(),
         _ => {
             println!("{} Unknown tool: {}", "Error:".red(), tool);
-            println!("Available: all, c, rust, cepton");
+            println!("Available: all, c, rust, cepton, ufb");
         }
     }
+}
+
+fn setup_ufb() {
+    println!("{}", "=== Setting up Cepton UFB Environment ===".bold().cyan());
+    installer::install_ufb_dependencies();
 }
 
 fn configure_cepton(path: Option<String>) {

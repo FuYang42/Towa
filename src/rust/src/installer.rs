@@ -161,6 +161,134 @@ pub fn install_cepton_sdk(path: Option<String>) {
     crate::config::update_cepton_path(sdk_path);
 }
 
+pub fn install_ufb_dependencies() {
+    println!("{}", "Installing Cepton Unified Firmware (UFB) Dependencies...".bold());
+    println!();
+
+    println!("{}", "This will install:".cyan());
+    println!("  - CMake and Ninja (build systems)");
+    println!("  - Python 3 (required for UFB builder)");
+    println!("  - Rust toolchain (for ufb_builder)");
+    println!("  - Additional tools (libpcap, etc.)");
+    println!();
+
+    #[cfg(target_os = "windows")]
+    {
+        println!("{}", "Windows Installation:".yellow());
+        println!();
+
+        // CMake and Ninja
+        if Command::new("cmake").arg("--version").output().is_err() {
+            println!("Installing CMake...");
+            run_command("winget", &["install", "-e", "--id", "Kitware.CMake"]);
+        }
+
+        if Command::new("ninja").arg("--version").output().is_err() {
+            println!("Installing Ninja...");
+            run_command("winget", &["install", "-e", "--id", "Ninja-build.Ninja"]);
+        }
+
+        // Python 3
+        if Command::new("python3").arg("--version").output().is_err() {
+            println!("Installing Python 3...");
+            run_command("winget", &["install", "-e", "--id", "Python.Python.3.10"]);
+            println!();
+            println!("{}", "Note: After installing Python, you may need to create a symlink:".yellow());
+            println!("  mklink \"C:\\Program Files\\Python310\\python3.exe\" \"C:\\Program Files\\Python310\\python.exe\"");
+        }
+
+        // Rust
+        if Command::new("rustc").arg("--version").output().is_err() {
+            println!("Installing Rust...");
+            println!("  Please visit: https://rustup.rs/");
+            println!("  Or run: winget install -e --id Rustlang.Rustup");
+        }
+
+        println!();
+        println!("{}", "Important Git Configuration:".yellow());
+        println!("  1. Enable Developer Mode in Windows Settings");
+        println!("  2. Run: git config --global core.symlinks true");
+        println!("  3. Run: git config --global core.autocrlf false");
+    }
+
+    #[cfg(target_os = "linux")]
+    {
+        println!("{}", "Linux Installation:".yellow());
+        println!();
+
+        if Command::new("apt").arg("--version").output().is_ok() {
+            println!("Ubuntu/Debian detected. Installing dependencies...");
+            println!("Running: sudo apt update && sudo apt install -y cmake ninja-build libpcap-dev python3 python3-pip");
+            println!();
+            println!("Please run the following command:");
+            println!("  sudo apt update && sudo apt install -y cmake ninja-build libpcap-dev python3 python3-pip");
+        } else if Command::new("dnf").arg("--version").output().is_ok() {
+            println!("Fedora/RHEL detected. Installing dependencies...");
+            println!("  sudo dnf install -y cmake ninja-build libpcap-devel python3 python3-pip");
+        } else if Command::new("pacman").arg("--version").output().is_ok() {
+            println!("Arch Linux detected. Installing dependencies...");
+            println!("  sudo pacman -S --noconfirm cmake ninja libpcap python python-pip");
+        }
+
+        // Rust
+        if Command::new("rustc").arg("--version").output().is_err() {
+            println!();
+            println!("Installing Rust...");
+            println!("  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh");
+        }
+    }
+
+    #[cfg(target_os = "macos")]
+    {
+        println!("{}", "macOS Installation:".yellow());
+        println!();
+
+        if Command::new("brew").arg("--version").output().is_ok() {
+            println!("Homebrew found. Installing dependencies...");
+            run_command("brew", &["install", "cmake", "ninja", "python3"]);
+
+            if Command::new("rustc").arg("--version").output().is_err() {
+                println!();
+                println!("Installing Rust...");
+                run_command("sh", &["-c", "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y"]);
+            }
+        } else {
+            println!("Homebrew not found. Please install it first:");
+            println!("  /bin/bash -c \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\"");
+        }
+    }
+
+    println!();
+    println!("{}", "Additional Steps for UFB Development:".cyan().bold());
+    println!();
+    println!("1. Install ARM LLVM Toolchain:");
+    println!("   - Download from: https://github.com/ARM-software/LLVM-embedded-toolchain-for-Arm/releases");
+    println!("   - Get version: ATfE-20.1.0 for your platform");
+    println!("   - Extract and rename to: ATfE-20.1.0 (remove platform suffix)");
+    #[cfg(target_os = "windows")]
+    println!("   - Move to: C:\\opt\\arm\\ATfE-20.1.0");
+    #[cfg(not(target_os = "windows"))]
+    println!("   - Move to: /opt/arm/ATfE-20.1.0");
+    println!();
+
+    println!("2. Install Pre-commit Tools (optional but recommended):");
+    println!("   pip3 install pre-commit pylint");
+    println!("   cargo install typos-cli");
+    println!();
+
+    println!("3. Configure Git:");
+    println!("   git config --global pull.rebase true");
+    println!("   git config --global core.symlinks true");
+    println!("   git config --global core.autocrlf false");
+    println!();
+
+    println!("4. For detailed setup instructions, see:");
+    println!("   docs/CEPTON_UFB_SETUP.md");
+    println!();
+
+    println!("{} UFB dependencies installation guide complete!", "✓".green());
+}
+
 fn run_command(program: &str, args: &[&str]) {
     println!("{} {} {}", "Running:".cyan(), program, args.join(" "));
 
