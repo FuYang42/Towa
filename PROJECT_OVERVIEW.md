@@ -291,6 +291,4 @@ MIT License - 详见 [LICENSE](LICENSE)
 
 ## 联系方式
 
-- GitHub: https://github.com/yourusername/towa
-- Issues: https://github.com/yourusername/towa/issues
-- Email: your.email@example.com
+- Email: Fuyou42@yahoo.co.jp
