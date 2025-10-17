@@ -1,0 +1,51 @@
+# Build directories
+build/
+target/
+bin/
+obj/
+
+# Compiled files
+*.exe
+*.out
+*.o
+*.so
+*.dylib
+*.dll
+*.a
+*.lib
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+*.cmake
+
+# Rust
+Cargo.lock
+**/*.rs.bk
+*.pdb
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Configuration
+.towa/
+*.local
+
+# Logs
+*.log
+
+# Cepton SDK (don't commit large binaries)
+cepton_sdk/
+CeptonSDK/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
