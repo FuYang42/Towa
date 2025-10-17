@@ -8,6 +8,26 @@ Towa is a comprehensive toolkit for quickly setting up development environments 
 - Cepton sensor debugging environment
 - **Cepton Unified Firmware (UFB) development environment**
 
+## 🎯 Get Started in 3 Steps
+
+```bash
+# 1️⃣ Clone the project
+git clone https://github.com/FuYang42/Towa.git
+cd Towa
+
+# 2️⃣ Run installation script
+./scripts/setup.sh install    # Linux/macOS
+# or
+.\scripts\setup.bat install    # Windows
+
+# 3️⃣ Verify installation
+./scripts/setup.sh check
+```
+
+✅ **That's it! Environment setup in 5 minutes**
+
+📖 **Detailed Guide:** [Getting Started →](GETTING_STARTED.md)
+
 ## Project Structure
 
 ```

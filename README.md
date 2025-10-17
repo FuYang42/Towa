@@ -27,6 +27,26 @@ Towa 是一个用于在全新电脑或系统中快速搭建开发环境的工具
 - 📡 Cepton 传感器调试环境
 - ⚙️ **Cepton Unified Firmware (UFB) 开发环境**
 
+## 🎯 3 步开始使用
+
+```bash
+# 1️⃣ 克隆项目
+git clone https://github.com/FuYang42/Towa.git
+cd Towa
+
+# 2️⃣ 运行安装脚本
+./scripts/setup.sh install    # Linux/macOS
+# 或
+.\scripts\setup.bat install    # Windows
+
+# 3️⃣ 验证安装
+./scripts/setup.sh check
+```
+
+✅ **就这么简单！5 分钟完成环境配置**
+
+📖 **详细教程:** [快速上手指南 →](GETTING_STARTED.md)
+
 ## 📁 项目结构
 
 ```

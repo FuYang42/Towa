@@ -8,6 +8,26 @@ Towaは、新しいコンピュータやシステムで開発環境を素早く�
 - Cepton センサーデバッグ環境
 - **Cepton Unified Firmware (UFB) 開発環境**
 
+## 🎯 3ステップで始める
+
+```bash
+# 1️⃣ プロジェクトをクローン
+git clone https://github.com/FuYang42/Towa.git
+cd Towa
+
+# 2️⃣ インストールスクリプトを実行
+./scripts/setup.sh install    # Linux/macOS
+# または
+.\scripts\setup.bat install    # Windows
+
+# 3️⃣ インストールを確認
+./scripts/setup.sh check
+```
+
+✅ **これだけ！5分で環境構築完了**
+
+📖 **詳細ガイド:** [スタートガイド →](GETTING_STARTED.md)
+
 ## プロジェクト構成
 
 ```
