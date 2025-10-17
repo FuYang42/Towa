@@ -172,10 +172,10 @@ void print_recommendations() {
     }
 }
 
-int main(int argc, char* argv[]) {
+int main(void) {
     printf("╔════════════════════════════════════════╗\n");
     printf("║   Towa Environment Checker v1.0        ║\n");
-    printf("║   Development Environment Scanner       ║\n");
+    printf("║   Development Environment Scanner      ║\n");
     printf("╚════════════════════════════════════════╝\n");
 
     print_system_info();
